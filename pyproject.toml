@@ -1,0 +1,25 @@
+# pyproject.toml
+
+[tool.black]
+line-length = 88
+target-version = ['py312'] # <-- CAMBIO: De 'py311' a 'py312'
+
+[tool.ruff]
+line-length = 88
+target-version = "py312" # <-- CAMBIO: Especificamos la versión para Ruff
+
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+]
+ignore = ["E501"] # Ignorar "line too long", black se encarga de esto.
+
+[tool.mypy]
+python_version = "3.12" # <-- CAMBIO: De "3.11" a "3.12"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
