@@ -1,0 +1,30 @@
+# docker-compose.yml
+version: "3.9"
+
+services:
+  postgres_db:
+    image: postgres:16-alpine
+
+    container_name: mipaciente_db
+
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=mipaciente
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d mipaciente"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
