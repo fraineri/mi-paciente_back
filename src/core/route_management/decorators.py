@@ -1,3 +1,4 @@
+from functools import update_wrapper
 from typing import Any, Callable, Generic, Tuple, TypeVar
 
 from core.route_management.enums import RouteVisibility
@@ -23,11 +24,14 @@ class Routable(Generic[F]):
         self.internal = visibility == RouteVisibility.INTERNAL
         self.version = version
 
-    def __call__(self, *args: Any, **kwargs: Any) -> Any:
+        update_wrapper(self, func)
+
+    # El método __call__ DEBE ser 'async' y usar 'await'
+    async def __call__(self, *args: Any, **kwargs: Any) -> Any:
         """
-        When the Routable instance is called, it executes the underlying function.
+        When the Routable instance is called, it executes the underlying async function.
         """
-        return self.callable(*args, **kwargs)
+        return await self.callable(*args, **kwargs)
 
 
 def route(
