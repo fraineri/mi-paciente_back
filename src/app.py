@@ -1,25 +1,21 @@
-# app/main.py
+import uvicorn
 from fastapi import FastAPI
 
-# Crea una instancia de la aplicación FastAPI
-app = FastAPI(
-    title="Mi Microservicio",
-    description="Un increíble microservicio creado con FastAPI.",
-    version="0.1.0",
-)
+from core.dependency_injection.container import Container
+from entry_points.router_setup import router_setup
 
 
-@app.get("/")
-def read_root():
-    """
-    Endpoint raíz que devuelve un saludo.
-    """
-    return {"message": "¡Hola, mundo desde FastAPI!"}
+def create_app() -> FastAPI:
+    container = Container()
+    _app = FastAPI()
+
+    router_setup.init(_app, container)
+
+    return _app
 
 
-@app.get("/health")
-def health_check():
-    """
-    Endpoint simple para verificar que el servicio está activo.
-    """
-    return {"status": "ok"}
+app = create_app()
+
+# Otherwise, run the app in the local environment
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
