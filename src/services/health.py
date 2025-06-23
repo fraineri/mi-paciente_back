@@ -1,5 +1,7 @@
 from typing import Dict
 
+from core.settings.project_settings import ProjectSettings
+
 
 class HealthCheckService:
     """
@@ -7,11 +9,11 @@ class HealthCheckService:
     This service is used to verify that the application is running and healthy.
     """
 
-    def __init__(self):
+    def __init__(self, project_settings: ProjectSettings):
         """
         Initialize the HealthCheckService.
         """
-        pass
+        self.project_settings = project_settings
 
     def check_health(self) -> Dict[str, str]:
         """
@@ -20,4 +22,8 @@ class HealthCheckService:
         Returns:
             dict: A dictionary containing the health status.
         """
-        return {"status": "healthy"}
+        return {
+            "status": "healthy",
+            "project_name": self.project_settings.PROJECT_NAME,
+            "environment": self.project_settings.ENVIRONMENT,
+        }

@@ -1,4 +1,4 @@
-from typing import Dict, cast
+from typing import Dict
 
 from services.health import HealthCheckService
 
@@ -22,4 +22,4 @@ class CheckGetHealth:
         Returns:
             dict: A dictionary containing the health status.
         """
-        return cast(Dict[str, str], self.health_check_service.check_health())
+        return self.health_check_service.check_health()
