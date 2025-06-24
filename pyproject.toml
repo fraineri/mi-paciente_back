@@ -2,11 +2,11 @@
 
 [tool.black]
 line-length = 88
-target-version = ['py312'] # <-- CAMBIO: De 'py311' a 'py312'
+target-version = ['py312']
 
 [tool.ruff]
 line-length = 88
-target-version = "py312" # <-- CAMBIO: Especificamos la versión para Ruff
+target-version = "py312"
 
 select = [
     "E",  # pycodestyle errors
@@ -16,10 +16,12 @@ select = [
     "C",  # flake8-comprehensions
     "B",  # flake8-bugbear
 ]
-ignore = ["E501"] # Ignorar "line too long", black se encarga de esto.
+ignore = ["E501"]
 
 [tool.mypy]
-python_version = "3.12" # <-- CAMBIO: De "3.11" a "3.12"
+python_version = "3.12"
 warn_return_any = true
 warn_unused_configs = true
 ignore_missing_imports = true
+mypy_path = "src" # Set the path to the source directory for mypy checks
+explicit_package_bases = true # Ensure that mypy checks the src (mypy_path) directory
