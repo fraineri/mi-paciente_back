@@ -47,17 +47,17 @@ class UnitOfWork:
         await self.redis_pipeline.reset()
 
     async def execute_postgres(
-        self, operation: Callable[[AsyncSession], Coroutine[None, None, T]]
+        self, operation: Callable[..., Coroutine[None, None, T]], *args, **kwargs
     ) -> T:
         """
         Executes a PostgreSQL operation within the current transaction.
         """
-        return await operation(self.postgres_session)
+        return await operation(self.postgres_session, *args, **kwargs)
 
     async def execute_redis(
-        self, operation: Callable[[Pipeline], Coroutine[None, None, T]]
+        self, operation: Callable[..., Coroutine[None, None, T]], *args, **kwargs
     ) -> T:
         """
         Executes a Redis operation within the current transaction pipeline.
         """
-        return await operation(self.redis_pipeline)
+        return await operation(self.redis_pipeline, *args, **kwargs)

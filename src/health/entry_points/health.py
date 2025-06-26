@@ -5,7 +5,8 @@ from core.dependency_injection.container import Container
 from core.route_management.decorators import route
 from core.route_management.enums import RouteVisibility
 from core.route_management.router import VersionedAPIRouter, create_versioned_router
-from use_cases.health.check_get_health import CheckGetHealth
+from health.domain.health import Health
+from health.use_cases.check_health import CheckHealth
 
 router: VersionedAPIRouter = create_versioned_router(path="/health")
 
@@ -14,8 +15,8 @@ router: VersionedAPIRouter = create_versioned_router(path="/health")
 @route(visibility=RouteVisibility.PUBLIC, version=(1, 0))
 @inject
 async def get_ping(
-    check_get_health: CheckGetHealth = Depends(  # noqa: B008
-        Provide[Container.usecases.health_check_get]
+    check_get_health: CheckHealth = Depends(  # noqa: B008
+        Provide[Container.health.usecases.provided.health_check_get]
     ),
-):
-    return check_get_health.execute()
+) -> Health:
+    return await check_get_health.execute()

@@ -2,7 +2,7 @@ from fastapi import FastAPI
 
 from core.dependency_injection.container import Container
 from core.route_management.manager import route_manager
-from entry_points import health
+from health.entry_points import health
 
 
 class RouterSetup:

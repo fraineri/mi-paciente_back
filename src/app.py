@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 
 from core.dependency_injection.container import Container
-from entry_points.router_setup import router_setup
+from router_setup import router_setup
 
 
 def create_app() -> FastAPI:

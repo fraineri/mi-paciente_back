@@ -2,14 +2,14 @@ from typing import cast
 
 from dependency_injector import containers, providers
 
-from core.dependency_injection.containers.settings import SettingsContainer
+from core.dependency_injection.containers.settings import CoreSettingsContainer
 from core.persistance.connection_managers.postgres import PostgresConnectionManager
 from core.persistance.connection_managers.redis import RedisConnectionManager
 from core.persistance.unit_of_work import UnitOfWork
 
 
-class PersistanceContainer(containers.DeclarativeContainer):
-    settings = cast(SettingsContainer, providers.DependenciesContainer())
+class CorePersistanceContainer(containers.DeclarativeContainer):
+    settings = cast(CoreSettingsContainer, providers.DependenciesContainer())
 
     # Connection Managers
     postgres_connection_manager = providers.Singleton(
